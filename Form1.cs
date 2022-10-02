@@ -15,13 +15,22 @@ namespace Process_Manupulator
 
     public partial class Form1 : Form
     {
+        ProcessManupulator pm = new ProcessManupulator();
 
         public Form1()
         {
+            // prever ce je admin
+
+            if(!pm.IsAdministrator())
+            {
+                MessageBox.Show("Please run program as an Administrator if you wish to perform anything but diagnostics as any administrative action will result in errors, PRESS `OK` TO CONTINUE.",
+                    $"Hold your horses {Environment.UserName}!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
             InitializeComponent();
 
             checkBox1.Checked = true;
-            this.Text = "Process Manipulator™ by 8qBIT#0101";
+            this.Text = "Windows Process Manipulator";
             comboBox1.Text = "Select a process..";
 
             Process[] procList = Process.GetProcesses();
@@ -41,8 +50,6 @@ namespace Process_Manupulator
                 }
             }
         }
-
-        ProcessManupulator pm = new ProcessManupulator();
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -149,16 +156,15 @@ namespace Process_Manupulator
 
         }
 
-        private void toolTip1_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
-
         private void button6_Click(object sender, EventArgs e)
         {
-            string userName = Environment.UserName;
-            MessageBox.Show("At this point i could've killed all windows processes, deleted all your files, shared your \"homework\" directory on your facebook feed or call all of those horny local milfs that are waiting for you, But i'm a nice person so this button does nothing. Or does it?", $"You've made a grave mistake, {userName}.",
+            MessageBox.Show("At this point i could've killed all windows processes, deleted all your files, shared your \"homework\" directory on your facebook feed or call all of those horny local milfs that are waiting for you, But i'm a nice person so this button does nothing. Or does it?", $"You've made a grave mistake, {Environment.UserName}.",
             MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/8qBITs");
         }
     }
 }
